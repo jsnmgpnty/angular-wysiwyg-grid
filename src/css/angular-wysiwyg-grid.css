@@ -1,0 +1,49 @@
+.ge-canvas.ge-editing .row {
+	background-color: #fff;
+	border: 1px solid #337AB7;
+}
+
+	.ge-canvas.ge-editing .row > .ge-tools-drawer {
+		background-color: #337AB7;
+	}
+
+		.ge-canvas.ge-editing .row > .ge-tools-drawer > a,
+		.ge-canvas.ge-editing .row > .ge-tools-drawer > a.ge-add-column  {
+			color: #fff;
+			font-size: 1.2em;
+		}
+
+.ge-canvas.ge-editing .column > .ge-tools-drawer {
+	background-color: #DFF0D8;
+}
+
+	.ge-canvas.ge-editing .column {
+	    background-color: #fff;
+    	border: 1px solid #3C763D;
+	}
+
+	.ge-canvas.ge-editing .column > .ge-tools-drawer a,
+	.ge-canvas.ge-editing .column > .ge-tools-drawer > a.ge-add-row {
+		color: #3C763D;
+		font-size: 1.2em;
+	}
+
+	.ge-canvas.ge-editing .ge-tools-drawer .ge-details {
+
+	}
+
+		.ge-canvas.ge-editing .ge-tools-drawer .ge-details input.ge-id {
+			font-size: 1em;
+		}
+
+		.ge-canvas.ge-editing .ge-tools-drawer .ge-details .btn {
+			font-size: 1em;
+		}
+
+.note-editor {
+	font-size: 1em;
+}
+
+.ge-mainControls .btn {
+	padding: 5px;
+}

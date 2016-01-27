@@ -1,0 +1,26 @@
+{
+  "name": "angular-wysiwyg-grid",
+  "authors": [
+    "Jason <jsnmgpnty@gmail.com>"
+  ],
+  "description": "Wysiwyg with grid-editor for angular js",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "font-awesome": "fontawesome#~4.5.0",
+    "jquery": "~2.2.0",
+    "bootstrap": "~3.3.6",
+    "jquery-ui": "jqueryui#~1.11.4",
+    "grid-editor": "~0.2.2"
+  }
+}

@@ -20,7 +20,7 @@ app.directive("wysiwygGrid", ["$interval", "wysiwygGridService", function ($inte
 			console.log("ERROR: no wysiwyg editor found");
 			return;
 		}
-		        
+		
         var opts = {
             content_types: [scope.editor]
         };
@@ -28,17 +28,26 @@ app.directive("wysiwygGrid", ["$interval", "wysiwygGridService", function ($inte
         if (scope.options) {
         	opts[scope.editor] = {
 	        	config: scope.options
-	        };	
+	        };
         }
-
-		$(elem).gridEditor(opts);
-		wysiwygGridService.setGridElement($(elem));
 		
-		// $interval(function () {
-  //       	var hasFocus = !! ($(elem).find(':focus').length > 0);
-  //       	if (!hasFocus)
-		// 		ngModel.$setViewValue($(elem).gridEditor('getHtml'));
-		// }, 5000);
+		var stop = $interval(function () {
+			if (scope.model) {
+				var html = $(elem).html();
+				html = html.replace(" ", "");
+				if (html) {
+					$(elem).gridEditor(opts);
+					wysiwygGridService.setGridElement($(elem));
+					$interval.cancel(stop);
+					stop = undefined;
+				}
+			} else {
+				$(elem).gridEditor(opts);
+				wysiwygGridService.setGridElement($(elem));
+				$interval.cancel(stop);
+				stop = undefined;
+			}
+		}, 500);
 	};
 	
 	return {
@@ -47,7 +56,8 @@ app.directive("wysiwygGrid", ["$interval", "wysiwygGridService", function ($inte
 		link: linkFn,
 		scope: {
 			editor: "@",
-			options: "="
+			options: "=",
+			model: "="
 		}
 	};
 }]);

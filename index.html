@@ -27,9 +27,9 @@
 		
 
 	    <script src="/wysiwyggrid/summernote/summernote.js"></script>
-	    <script src="/wysiwyggrid/summernote/plugin/hello/summernote-ext-hello.js"></script>
-	    <script src="/wysiwyggrid/summernote/plugin/bootstrap-panel/bootstrap-panel.js"></script>
-	    <script src="/wysiwyggrid/summernote/plugin/specialchars/summernote-ext-specialchars.js"></script>
+	    <script src="/wysiwyggrid/summernote/plugin/summernote-ext-addclass.js"></script>
+	    <script src="/wysiwyggrid/summernote/plugin/summernote-font-weight.js"></script>
+	    <script src="/wysiwyggrid/summernote/plugin/responsive-media.js"></script>
 
 	    <script src="/wysiwyggrid/ckeditor/ckeditor.js"></script>
 	    <script src="/wysiwyggrid/src/js/angular-wysiwyg-grid.js"></script>
@@ -44,7 +44,8 @@
 			</p>
 			<div class="well well-lg">
 				<h3>Create new grid layout</h3>
-				<div wysiwyg-grid editor="summernote"></div>
+				<div wysiwyg-grid editor="summernote" options="options" ng-bind-html="htmlText" model="htmlText">
+				</div>
 				<p>
 					To load existing layout, use ng-bind-html="your-model" to display it in the grid editor
 				</p>
@@ -64,22 +65,26 @@
 		});
 		
 		angular.module("app").controller("MainController", function ($scope, wysiwygGridService) {
-			$scope.htmlText = "";
-
-			$scope.existingHtmlText = '<div class="row"><div class="col-md-6 col-sm-6 col-xs-6 column"><div class="ge-content ge-content-type-summernote" data-ge-content-type="summernote" style=""><p>Lorem ipsum dolor sit amet</p></div></div><div class="col-md-6 col-sm-6 col-xs-6 column"><div class="ge-content ge-content-type-summernote" data-ge-content-type="summernote" style=""><p>Hello World!</p></div></div></div>';
+			$scope.htmlText = '<div class="row"><div class="col-sm-3 col-xs-3 column col-md-4"><div class="ge-content ge-content-type-summernote" data-ge-content-type="summernote"><h1 style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Lorem ipsum dolor sit amet, consectetur</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit exercitationem eaque aperiam rem quia quibusdam dolor ducimus quo similique eos pariatur nostrum aliquam nam eius, doloremque quis voluptatum unde. Porro voluptates aspernatur voluptate ipsam, magni vero. Accusamus, iusto tempore id!</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae laboriosam, excepturi quas.</p></div></div><div class="col-sm-3 col-xs-3 column col-md-4"><div class="ge-content ge-content-type-summernote" data-ge-content-type="summernote"><h1 style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Lorem ipsum dolor sit amet, consectetur</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit exercitationem eaque aperiam rem quia quibusdam dolor ducimus quo similique eos pariatur nostrum aliquam nam eius, doloremque quis voluptatum unde. Porro voluptates aspernatur voluptate ipsam, magni vero. Accusamus, iusto tempore id!</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae laboriosam, excepturi quas.</p></div></div><div class="col-sm-3 col-xs-3 column col-md-4"><div class="ge-content ge-content-type-summernote" data-ge-content-type="summernote"><h1 style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Lorem ipsum dolor sit amet, consectetur</h1><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit exercitationem eaque aperiam rem quia quibusdam dolor ducimus quo similique eos pariatur nostrum aliquam nam eius, doloremque quis voluptatum unde. Porro voluptates aspernatur voluptate ipsam, magni vero. Accusamus, iusto tempore id!</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae laboriosam, excepturi quas.</p></div></div></div>';
 			
 			$scope.options = {
 				popover: {
 					air: [
-			            ['style', ['style']],
 			            ['font', ['bold', 'underline', 'clear']],
 			            ['fontname', ['fontname']],
 			            ['color', ['color']],
 			            ['para', ['ul', 'ol', 'paragraph']],
 			            ['table', ['table']],
 			            ['insert', ['link', 'picture', 'video']],
-			            ['view', ['fullscreen', 'codeview', 'help']]
+						["fontbase", ["fontname", "fontsize", "color", "height", "fontWeight"]],
+						["fontstyle", ["bold", "italic", "strikethrough", "underline"]],
+						["elems", ["ul", "ol", "paragraph", "hr", "style"]]
 			        ]
+				},
+				callbacks: {
+					onFocus: function () {
+						$(this).next().find(".note-editable").selectText();
+					}
 				},
 				tabsize: 2,
                 airMode: true
@@ -93,5 +98,22 @@
 				$scope.htmlText = wysiwygGridService.getGridValue();
 			};
 		});
+		
+		jQuery.fn.selectText = function () {
+			var doc = document;
+			var element = this[0];
+			if (doc.body.createTextRange) {
+				var range = document.body.createTextRange();
+				range.moveToElementText(element);
+				range.select();
+			}
+			else if (window.getSelection) {
+				var selection = window.getSelection();
+				var range = document.createRange();
+				range.selectNodeContents(element);
+				selection.removeAllRanges();
+				selection.addRange(range);
+			}
+		};
 	</script>
 </html>

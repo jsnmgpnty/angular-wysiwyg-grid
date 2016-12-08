@@ -636,7 +636,7 @@ $.fn.gridEditor.RTEs = {};
                         (settings.summernote && settings.summernote.config ? settings.summernote.config : {}),
                         {
                             tabsize: 2,
-                            airMode: true,
+                            airMode: false,
                             // Focus editor on creation
                             callbacks: {
                                 onInit: function() {
